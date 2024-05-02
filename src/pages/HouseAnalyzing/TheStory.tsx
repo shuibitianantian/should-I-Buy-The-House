@@ -12,7 +12,7 @@ import { showStoryKey } from ".";
 
 export default ({ onTimeout }: { onTimeout: () => void }) => {
   return (
-    <div className="flex gap-4 items-center justify-center w-[calc(100vw-100px)]">
+    <div className="flex gap-4 items-center justify-center">
       <div className="ml-2 border-dashed p-4 border border-slate-300 rounded-md overflow-auto max-h-[calc(100vh-36px)]">
         <Text fs="italic">The Little Story</Text>
         <Blockquote
@@ -73,7 +73,6 @@ export default ({ onTimeout }: { onTimeout: () => void }) => {
           <Tooltip label="I do not care you story, please hide it!">
             <Button
               color="red"
-              size="xs"
               onClick={() => {
                 localStorage.setItem(showStoryKey, "false");
                 onTimeout();
@@ -82,7 +81,7 @@ export default ({ onTimeout }: { onTimeout: () => void }) => {
               <IconSquareRoundedX size={18} />
             </Button>
           </Tooltip>
-          <Button color="blue" size="xs" onClick={onTimeout}>
+          <Button color="blue" onClick={onTimeout}>
             <IconSquareRoundedArrowRight size={18} className="mr-2" />
             Skip
           </Button>

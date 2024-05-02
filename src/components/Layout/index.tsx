@@ -59,7 +59,7 @@ export default ({}: PropsWithChildren<{}>) => {
           </Stack>
         </div>
       </nav>
-      <div className="mt-4 max-w-[1440px] min-w-[1200px] overflow-auto ml-auto mr-auto">
+      <div className="mt-4 max-w-[1440px] min-w-[1440px] overflow-auto ml-auto mr-auto">
         <Outlet />
       </div>
     </div>

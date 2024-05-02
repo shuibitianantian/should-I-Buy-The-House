@@ -52,7 +52,7 @@ export default ({
 
   return (
     <form>
-      <div className="mt-2 max-w-[1440px] min-w-[1200px]">
+      <div className="mt-2 max-w-[1440px] min-w-[1440px]">
         <Fieldset
           legend={<div className="mx-2 font-medium">Basic configuration</div>}
           className="w-full"
@@ -67,7 +67,7 @@ export default ({
               icon={<IconInfoSquareRounded />}
               onClose={() => setShowFormulas(false)}
             >
-              <List listStyleType="disc" size="xs">
+              <List listStyleType="disc">
                 <List.Item>
                   The down payment is your start money for the alternative
                   investment
@@ -85,16 +85,16 @@ export default ({
                 <List.Item>
                   Monthly mortgage payment formula:
                   <BlockMath math="p \cdot r \cdot \frac{{(1 + r)^n}}{{(1 + r)^n - 1}}" />
-                  <Text fs="italic" size="xs" display="inline">
+                  <Text fs="italic" display="inline">
                     p:
                   </Text>{" "}
                   the amount of money you borrowed from the lender
                   <br />
-                  <Text fs="italic" size="xs" display="inline">
+                  <Text fs="italic" display="inline">
                     r:
                   </Text>{" "}
                   monthly interest rate <br />
-                  <Text fs="italic" size="xs" display="inline">
+                  <Text fs="italic" display="inline">
                     n:
                   </Text>{" "}
                   the total number of payments
@@ -108,7 +108,6 @@ export default ({
             </Alert>
           ) : (
             <Button
-              size="xs"
               variant="filled"
               color="blue"
               onClick={() => setShowFormulas(true)}
@@ -154,12 +153,11 @@ export default ({
           </Box>
           <Group className="mt-4 justify-end">
             {onPrev && (
-              <Button size="xs" onClick={onPrev} variant="outline">
+              <Button onClick={onPrev} variant="outline">
                 Previous
               </Button>
             )}
             <Button
-              size="xs"
               variant="outline"
               disabled={!onNext}
               onClick={() => {

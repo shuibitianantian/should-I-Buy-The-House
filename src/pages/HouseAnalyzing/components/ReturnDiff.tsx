@@ -216,18 +216,14 @@ export default ({ onPrev }: { onPrev: () => void }) => {
   }, [options]);
 
   return (
-    <div className="flex flex-col max-w-[1200px] min-w-[1200px]">
+    <div className="flex flex-col max-w-[1440px] min-w-[1440px]">
       {showUpdateDrawer && (
         <ConfigurationDrawer onClose={() => setShowUpdateDrawer(false)} />
       )}
       <Fieldset className="mb-4" pl="lg" pt="lg" pb="lg">
-        <Text size="xs" className="flex gap-2 items-center mb-4 w-full">
-          <IconSettings size={16} />
-          Options
-        </Text>
         <Group>
           <div>
-            <Text size="xs">The estimation of the home price</Text>
+            <Text>The estimation of the home price</Text>
             <Slider
               color="blue"
               step={25}
@@ -240,7 +236,6 @@ export default ({ onPrev }: { onPrev: () => void }) => {
                 };
               })}
               value={homePriceFactor}
-              size="xs"
               onChange={(v) => {
                 setHomePriceFactor(v);
               }}
@@ -248,9 +243,7 @@ export default ({ onPrev }: { onPrev: () => void }) => {
             />
           </div>
           <div className="pt-3 ml-8">
-            <Text size="xs" className="mb-1">
-              Show all trends
-            </Text>
+            <Text className="mb-1">Show all trends</Text>
             <Switch
               checked={showAll}
               onChange={(v) => setShowAll(v.target.checked)}
@@ -259,14 +252,12 @@ export default ({ onPrev }: { onPrev: () => void }) => {
           </div>
           <Group className="ml-auto mr-4">
             <Button
-              size="xs"
               leftSection={<IconSettings2 size={14} />}
               onClick={() => setShowUpdateDrawer(true)}
             >
               Update configuration
             </Button>
             <Button
-              size="xs"
               leftSection={<IconArrowBack size={14} />}
               onClick={onPrev}
               variant="light"

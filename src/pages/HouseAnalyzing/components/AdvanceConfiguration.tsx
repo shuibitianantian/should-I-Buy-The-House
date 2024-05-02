@@ -39,7 +39,7 @@ export default ({
 
   return (
     <form>
-      <div className="mt-2 max-w-[1440px] min-w-[1200px]">
+      <div className="mt-2 max-w-[1440px] min-w-[1440px]">
         <Fieldset
           legend={<div className="mx-2 font-medium">Advance configuration</div>}
           className="w-full"
@@ -54,14 +54,13 @@ export default ({
               icon={<IconInfoSquareRounded />}
               onClose={() => setShowAlert(false)}
             >
-              <Text size="xs">
+              <Text>
                 The values in this section have a high level of uncertainty and
                 have a significant impact on the simulation results.
               </Text>
             </Alert>
           ) : (
             <Button
-              size="xs"
               variant="filled"
               color="orange"
               onClick={() => setShowAlert(true)}
@@ -94,12 +93,11 @@ export default ({
           </Box>
           <Group className="mt-4 justify-end">
             {onPrev && (
-              <Button size="xs" onClick={onPrev} variant="outline">
+              <Button onClick={onPrev} variant="outline">
                 Previous
               </Button>
             )}
             <Button
-              size="xs"
               variant="outline"
               disabled={!onNext}
               onClick={() => {
