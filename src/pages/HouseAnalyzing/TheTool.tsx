@@ -9,7 +9,7 @@ export default ({ onViewStory }: { onViewStory: () => void }) => {
   const [step, setStep] = useState(0);
 
   return (
-    <>
+    <div className="max-w-[1440px] min-w-[1200px]">
       <Title order={4} className="flex items-center mb-6">
         <Badge
           size="xl"
@@ -38,6 +38,6 @@ export default ({ onViewStory }: { onViewStory: () => void }) => {
         />
       )}
       {step === 2 && <ReturnDiff onPrev={() => setStep(0)} />}
-    </>
+    </div>
   );
 };

@@ -11,7 +11,16 @@ import HouseAnalyzingContext, {
 } from "../../../context/HouseAnalyzingProvider/HouseAnalyzingContext";
 import ReactECharts, { EChartsInstance } from "echarts-for-react";
 import { simulate } from "./utils";
-import { Button, Group, Paper, Slider, Switch, Text, rem } from "@mantine/core";
+import {
+  Button,
+  Fieldset,
+  Group,
+  Paper,
+  Slider,
+  Switch,
+  Text,
+  rem,
+} from "@mantine/core";
 import {
   IconArrowBack,
   IconSettings,
@@ -207,11 +216,11 @@ export default ({ onPrev }: { onPrev: () => void }) => {
   }, [options]);
 
   return (
-    <div className="flex flex-col w-[calc(100vw-120px)] min-w-[1200px]">
+    <div className="flex flex-col max-w-[1200px] min-w-[1200px]">
       {showUpdateDrawer && (
         <ConfigurationDrawer onClose={() => setShowUpdateDrawer(false)} />
       )}
-      <Paper className="mb-4" shadow="xs" pl="md" pt="sm" pb="xl">
+      <Fieldset className="mb-4" pl="lg" pt="lg" pb="lg">
         <Text size="xs" className="flex gap-2 items-center mb-4 w-full">
           <IconSettings size={16} />
           Options
@@ -248,7 +257,7 @@ export default ({ onPrev }: { onPrev: () => void }) => {
               className="cursor-pointer"
             />
           </div>
-          <Group className="ml-auto mr-12">
+          <Group className="ml-auto mr-4">
             <Button
               size="xs"
               leftSection={<IconSettings2 size={14} />}
@@ -267,7 +276,7 @@ export default ({ onPrev }: { onPrev: () => void }) => {
             </Button>
           </Group>
         </Group>
-      </Paper>
+      </Fieldset>
       <Carousel slidesToScroll={1} align="start" withIndicators loop>
         <Carousel.Slide key="diff">
           <ReactECharts

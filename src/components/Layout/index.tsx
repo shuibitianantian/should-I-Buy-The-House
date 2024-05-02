@@ -51,7 +51,7 @@ export default ({}: PropsWithChildren<{}>) => {
   ));
 
   return (
-    <div className="flex bg-gray-100 bg-opacity-25">
+    <div className="flex bg-gray-100 bg-opacity-25 w-full">
       <nav className={classes.navbar}>
         <div className={classes.navbarMain}>
           <Stack justify="center" gap={0}>
@@ -59,7 +59,7 @@ export default ({}: PropsWithChildren<{}>) => {
           </Stack>
         </div>
       </nav>
-      <div className="mt-4 ml-4">
+      <div className="mt-4 max-w-[1440px] min-w-[1200px] overflow-auto ml-auto mr-auto">
         <Outlet />
       </div>
     </div>
