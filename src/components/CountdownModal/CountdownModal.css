@@ -1,0 +1,43 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.5s;
+  z-index: 1000;
+}
+
+.modal-content {
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 60px;
+  color: white;
+}
+
+.countdown-animation {
+  animation: pop 0.5s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

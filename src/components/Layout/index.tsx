@@ -1,8 +1,18 @@
-import { PropsWithChildren, useState } from "react";
-import { Tooltip, UnstyledButton, Stack, rem } from "@mantine/core";
+import { PropsWithChildren, useEffect, useMemo, useState } from "react";
+import {
+  Tooltip,
+  UnstyledButton,
+  Stack,
+  rem,
+  Text,
+  Title,
+  Badge,
+} from "@mantine/core";
 import { IconAnalyze } from "@tabler/icons-react";
 import classes from "./NavbarMinimalColored.module.css";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import RandomMovingBox from "../MovingBlock";
+import CountdownModal from "../CountdownModal";
 
 interface NavbarLinkProps {
   icon: typeof IconAnalyze;
@@ -38,6 +48,15 @@ export default ({}: PropsWithChildren<{}>) => {
 
   const navigate = useNavigate();
 
+  const location = useLocation();
+
+  const showWelcomeMessage = useMemo(() => {
+    if (location.pathname === "/") {
+      return true;
+    }
+    return false;
+  }, [location.pathname]);
+
   const links = navigations.map((link, index) => (
     <NavbarLink
       {...link}
@@ -59,7 +78,9 @@ export default ({}: PropsWithChildren<{}>) => {
           </Stack>
         </div>
       </nav>
-      <div className="mt-4 max-w-[1440px] min-w-[1440px] overflow-auto ml-auto mr-auto">
+      {showWelcomeMessage && <CountdownModal />}
+      <div className="relative mt-4 overflow-auto ml-auto mr-auto">
+        {showWelcomeMessage && <RandomMovingBox />}
         <Outlet />
       </div>
     </div>
