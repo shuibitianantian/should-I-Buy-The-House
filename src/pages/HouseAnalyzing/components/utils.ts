@@ -49,7 +49,11 @@ export const simulate = ({
 }) => {
     const loan = homePrice - downPayment;
 
-    const lines: { totalCosts: number[]; investmentReturns: number[]; diffs: number[] }[] = [];
+    const lines: {
+        totalCosts: number[];
+        investmentReturns: number[];
+        diffs: number[];
+    }[] = [];
 
     const monthlyPayment = calculateMonthlyPaymentOfLoan(
         loan,
@@ -73,8 +77,8 @@ export const simulate = ({
             return ret;
         }, 0);
 
-
-        const annualNewInvestment = ((totalCosts.at(-2) || 0) - downPayment) / years;
+        const annualNewInvestment =
+            ((totalCosts.at(-2) || 0) - downPayment) / years;
 
         const investmentReturns = calculateTotalInvestmentReturns(
             downPayment,
@@ -89,8 +93,13 @@ export const simulate = ({
             totalCosts,
             investmentReturns,
             diffs: investmentReturns.map((ret, l) => {
-                return Math.round(homePrice * Math.pow(1 + annualizedReturn, l + 1) - totalCosts[l] - ret - (years - l - 1) * 12 * monthlyPayment);
-            })
+                return Math.round(
+                    homePrice * Math.pow(1 + annualizedReturn, l + 1) -
+                    totalCosts[l] -
+                    (years - l - 1) * 12 * monthlyPayment -
+                    ret
+                );
+            }),
         });
     });
     return lines;

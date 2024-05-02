@@ -12,8 +12,13 @@ import HouseAnalyzingContext, {
 import ReactECharts, { EChartsInstance } from "echarts-for-react";
 import { simulate } from "./utils";
 import { Button, Group, Paper, Slider, Switch, Text, rem } from "@mantine/core";
-import { IconArrowBack, IconSettings } from "@tabler/icons-react";
+import {
+  IconArrowBack,
+  IconSettings,
+  IconSettings2,
+} from "@tabler/icons-react";
 import { Carousel } from "@mantine/carousel";
+import ConfigurationDrawer from "./ConfigurationDrawer";
 
 const homeFactorMapping: Record<string, number> = {
   0: 1,
@@ -27,6 +32,8 @@ export default ({ onPrev }: { onPrev: () => void }) => {
   const context = useContext(HouseAnalyzingContext);
   const [homePriceFactor, setHomePriceFactor] = useState(50);
   const [showAll, setShowAll] = useState(false);
+  const [showUpdateDrawer, setShowUpdateDrawer] = useState(false);
+
   const echartsRefDiff = useRef<EChartsInstance>(null);
 
   const updateChartDifference = (newOptions: any) => {
@@ -49,6 +56,19 @@ export default ({ onPrev }: { onPrev: () => void }) => {
       mortgageInterestRate: context[MORTGAGE_RATE_FIELD] / 100,
       averageAnnualInvestmentYield: context[AVG_ANNUAL_YIELD] / 100,
     });
+
+    const rentals: number[] = [];
+    [...Array(context[YEARS_FIELD]).keys()].reduce((acc, i) => {
+      const ret = Math.round(
+        context[RENTAL_BASE_FIELD] *
+          Math.pow(1 + context[RENTAL_RAISE_FIELD] / 100, i) *
+          12 +
+          acc
+      );
+      rentals.push(ret);
+      return ret;
+    }, 0);
+
     const differenceTrendOptions = {
       title: {
         text: "Investment difference trends",
@@ -129,9 +149,56 @@ export default ({ onPrev }: { onPrev: () => void }) => {
         },
       ],
     };
+    const rentalsOverReturns = {
+      title: {
+        text: "Rental monthly VS Cumulative investment return",
+      },
+      tooltip: {
+        trigger: "axis",
+        axisPointer: {
+          type: "cross",
+        },
+      },
+      xAxis: {
+        type: "category",
+        boundaryGap: false,
+        data: [...Array(context[YEARS_FIELD]).keys()].map(
+          (i) => `Year ${i + 1}`
+        ),
+      },
+      yAxis: [
+        {
+          type: "value",
+        },
+      ],
+      series: [
+        {
+          name: "Cumulative rental costs",
+          type: "line",
+          smooth: true,
+          data: rentals,
+        },
+        {
+          name: "Cumulative investment return",
+          type: "line",
+          smooth: true,
+          data: lines.at(-1)?.investmentReturns,
+        },
+        {
+          name: "Cumulative Investment return (subtract rental costs)",
+          type: "bar",
+
+          data: lines
+            .at(-1)
+            ?.investmentReturns.map((ret, i) => ret + rentals[i]),
+        },
+      ],
+    };
+
     return {
       differenceTrendOptions,
       costsOverReturnOptions,
+      rentalsOverReturns,
     };
   }, [context, homePriceFactor, showAll]);
 
@@ -141,6 +208,9 @@ export default ({ onPrev }: { onPrev: () => void }) => {
 
   return (
     <div className="flex flex-col w-[calc(100vw-120px)] min-w-[1200px]">
+      {showUpdateDrawer && (
+        <ConfigurationDrawer onClose={() => setShowUpdateDrawer(false)} />
+      )}
       <Paper className="mb-4" shadow="xs" pl="md" pt="sm" pb="xl">
         <Text size="xs" className="flex gap-2 items-center mb-4 w-full">
           <IconSettings size={16} />
@@ -148,9 +218,7 @@ export default ({ onPrev }: { onPrev: () => void }) => {
         </Text>
         <Group>
           <div>
-            <Text size="xs" fs="italic">
-              The estimation of the home price
-            </Text>
+            <Text size="xs">The estimation of the home price</Text>
             <Slider
               color="blue"
               step={25}
@@ -171,7 +239,7 @@ export default ({ onPrev }: { onPrev: () => void }) => {
             />
           </div>
           <div className="pt-3 ml-8">
-            <Text size="xs" fs="italic" className="mb-1">
+            <Text size="xs" className="mb-1">
               Show all trends
             </Text>
             <Switch
@@ -180,15 +248,24 @@ export default ({ onPrev }: { onPrev: () => void }) => {
               className="cursor-pointer"
             />
           </div>
-          <div className="ml-auto mr-12">
+          <Group className="ml-auto mr-12">
+            <Button
+              size="xs"
+              leftSection={<IconSettings2 size={14} />}
+              onClick={() => setShowUpdateDrawer(true)}
+            >
+              Update configuration
+            </Button>
             <Button
               size="xs"
               leftSection={<IconArrowBack size={14} />}
               onClick={onPrev}
+              variant="light"
+              color="red"
             >
               Go back
             </Button>
-          </div>
+          </Group>
         </Group>
       </Paper>
       <Carousel slidesToScroll={1} align="start" withIndicators loop>
@@ -202,6 +279,12 @@ export default ({ onPrev }: { onPrev: () => void }) => {
         <Carousel.Slide key="costs-returns">
           <ReactECharts
             option={options.costsOverReturnOptions}
+            style={{ width: "100%", height: 480 }}
+          />
+        </Carousel.Slide>
+        <Carousel.Slide key="rentals-returns">
+          <ReactECharts
+            option={options.rentalsOverReturns}
             style={{ width: "100%", height: 480 }}
           />
         </Carousel.Slide>
