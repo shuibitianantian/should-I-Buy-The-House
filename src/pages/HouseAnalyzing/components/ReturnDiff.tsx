@@ -216,7 +216,7 @@ export default ({ onPrev }: { onPrev: () => void }) => {
   }, [options]);
 
   return (
-    <div className="flex flex-col max-w-[1440px] min-w-[1440px]">
+    <div className="flex flex-col max-w-[1200px] min-w-[1200px]">
       {showUpdateDrawer && (
         <ConfigurationDrawer onClose={() => setShowUpdateDrawer(false)} />
       )}

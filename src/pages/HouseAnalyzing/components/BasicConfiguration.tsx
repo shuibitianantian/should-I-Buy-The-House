@@ -52,7 +52,7 @@ export default ({
 
   return (
     <form>
-      <div className="mt-2 max-w-[1440px] min-w-[1440px]">
+      <div className="mt-2 max-w-[1200px] min-w-[1200px]">
         <Fieldset
           legend={<div className="mx-2 font-medium">Basic configuration</div>}
           className="w-full"
